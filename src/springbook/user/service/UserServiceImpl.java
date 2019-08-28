@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
 
     public void upgradeLevels() {
         List<User> users = userDao.getAll();
-        for(User user: users) {
-            if(canUpgradeLevel(user)) {
+        for (User user : users) {
+            if (canUpgradeLevel(user)) {
                 upgradeLevel(user);
             }
         }
@@ -52,15 +52,19 @@ public class UserServiceImpl implements UserService {
     private boolean canUpgradeLevel(User user) {
         Level currentLevel = user.getLevel();
         switch (currentLevel) {
-            case BASIC: return  (user.getLogin() >= MIN_LOGCOUNT_FOR_SILVER);
-            case SILVER: return (user.getRecommend() >= MIN_RECCOMEND_FOR_GOLD);
-            case GOLD: return false;
-            default: throw new IllegalArgumentException("Unknown Level: " + currentLevel);
+            case BASIC:
+                return (user.getLogin() >= MIN_LOGCOUNT_FOR_SILVER);
+            case SILVER:
+                return (user.getRecommend() >= MIN_RECCOMEND_FOR_GOLD);
+            case GOLD:
+                return false;
+            default:
+                throw new IllegalArgumentException("Unknown Level: " + currentLevel);
         }
     }
 
     public void add(User user) {
-        if(user.getLevel() == null) {
+        if (user.getLevel() == null) {
             user.setLevel(Level.BASIC);
         }
         userDao.add(user);

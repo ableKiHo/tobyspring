@@ -37,9 +37,9 @@ public class UserDaoTest {
     @Before
     public void setUp() {
 
-        this.user1 = new User("umkiho1","kioh.um1","1234", Level.BASIC, 1, 0, "able.kho.um1@gmail.com");
-        this.user2 = new User("umkiho2","kioh.um2","1234", Level.SILVER, 55, 10, "able.kho.um2@gmail.com");
-        this.user3 = new User("umkiho3","kioh.um3","1234", Level.GOLD, 100, 40, "able.kho.um3@gmail.com");
+        this.user1 = new User("umkiho1", "kioh.um1", "1234", Level.BASIC, 1, 0, "able.kho.um1@gmail.com");
+        this.user2 = new User("umkiho2", "kioh.um2", "1234", Level.SILVER, 55, 10, "able.kho.um2@gmail.com");
+        this.user3 = new User("umkiho3", "kioh.um3", "1234", Level.GOLD, 100, 40, "able.kho.um3@gmail.com");
 
 
     }
@@ -113,7 +113,6 @@ public class UserDaoTest {
         checkSameUser(user3, users3.get(2));
 
 
-
     }
 
     private void checkSameUser(User user1, User user2) {
@@ -142,9 +141,8 @@ public class UserDaoTest {
         try {
             dao.add(user1);
             dao.add(user1);
-        }
-        catch (DuplicateKeyException ex) {
-            SQLException sqlEx = (SQLException)ex.getRootCause();
+        } catch (DuplicateKeyException ex) {
+            SQLException sqlEx = (SQLException) ex.getRootCause();
             SQLExceptionTranslator set = new SQLErrorCodeSQLExceptionTranslator(this.dataSource);
             assertThat(set.translate(null, null, sqlEx), is(DuplicateKeyException.class));
         }

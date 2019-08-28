@@ -14,6 +14,7 @@ import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,11 +49,11 @@ public class UserServiceTest {
     @Before
     public void setUp() {
         users = Arrays.asList(
-                new User("umkiho1","kioh.um1","1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0, "able.kiho.um1@gmail.com"),
-                new User("umkiho2","kioh.um2","1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0, "able.kiho.um2@gmail.com"),
-                new User("umkiho3","kioh.um3","1234", Level.SILVER, 60, MIN_RECCOMEND_FOR_GOLD - 1, "able.kiho.um3@gmail.com"),
-                new User("umkiho4","kioh.um4","1234", Level.SILVER, 60, MIN_RECCOMEND_FOR_GOLD, "able.kiho.um4@gmail.com"),
-                new User("umkiho5","kioh.um5","1234", Level.GOLD, 100, Integer.MAX_VALUE, "able.kiho.um5@gmail.com")
+                new User("umkiho1", "kioh.um1", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0, "able.kiho.um1@gmail.com"),
+                new User("umkiho2", "kioh.um2", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0, "able.kiho.um2@gmail.com"),
+                new User("umkiho3", "kioh.um3", "1234", Level.SILVER, 60, MIN_RECCOMEND_FOR_GOLD - 1, "able.kiho.um3@gmail.com"),
+                new User("umkiho4", "kioh.um4", "1234", Level.SILVER, 60, MIN_RECCOMEND_FOR_GOLD, "able.kiho.um4@gmail.com"),
+                new User("umkiho5", "kioh.um5", "1234", Level.GOLD, 100, Integer.MAX_VALUE, "able.kiho.um5@gmail.com")
         );
     }
 
@@ -87,9 +88,9 @@ public class UserServiceTest {
 
     private void checkLevelUpgraded(User user, boolean upgraded) {
         User userUpdate = userDao.get(user.getId());
-        if(upgraded) {
+        if (upgraded) {
             assertThat(userUpdate.getLevel(), is(user.getLevel().nextLevel()));
-        }else {
+        } else {
             assertThat(userUpdate.getLevel(), is(user.getLevel()));
         }
     }
@@ -118,17 +119,25 @@ public class UserServiceTest {
         testUserService.setUserDao(userDao);
         testUserService.setMailSender(mailSender);
 
-        UserServiceTx txUserService = new UserServiceTx();
+        /*UserServiceTx txUserService = new UserServiceTx();
         txUserService.setTransactionManager(transactionManager);
-        txUserService.setUserService(testUserService);
+        txUserService.setUserService(testUserService);*/
+
+        TransactionHandler txHandler = new TransactionHandler();
+        txHandler.setTarget(testUserService);
+        txHandler.setTransactionManager(transactionManager);
+        txHandler.setPattern("upgradeLevels");;
+
+        UserService txUserService = (UserService) Proxy.newProxyInstance(
+                getClass().getClassLoader(), new Class[] {UserService.class}, txHandler );
 
         userDao.deleteAll();
-        for(User user : users) userDao.add(user);
+        for (User user : users) userDao.add(user);
 
         try {
             txUserService.upgradeLevels();
             fail("TestUserServiceException expected");
-        }catch (TestUserService.TestUserServiceException e) {
+        } catch (TestUserService.TestUserServiceException e) {
 
         }
 

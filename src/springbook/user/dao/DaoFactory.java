@@ -17,7 +17,7 @@ public class DaoFactory {
         dataSource.setUrl("jdbc://mysql://localhost/springbook?characterEncoding=UTF-8");
         dataSource.setUsername("root");
         dataSource.setPassword("1234");
-        return dataSource ;
+        return dataSource;
     }
 
     @Bean

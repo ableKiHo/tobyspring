@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDaoJdbc implements UserDao{
+public class UserDaoJdbc implements UserDao {
 
     private RowMapper<User> userMapper =
             new RowMapper<User>() {

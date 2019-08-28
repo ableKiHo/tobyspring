@@ -17,11 +17,11 @@ public class Calculator {
             return res;
         } catch (IOException e) {
             throw e;
-        }finally {
-            if(br != null) {
+        } finally {
+            if (br != null) {
                 try {
                     br.close();
-                }catch (IOException e) {
+                } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -39,7 +39,7 @@ public class Calculator {
         return lineReadTemplate(filepath, sumCallBack, 0);
     }
 
-    public Integer calcMultiply(String numFilepath)  throws IOException{
+    public Integer calcMultiply(String numFilepath) throws IOException {
         LineCallback<Integer> multiplyCallback = new LineCallback<Integer>() {
             @Override
             public Integer doSomethingWithLine(String line, Integer value) {
@@ -56,6 +56,6 @@ public class Calculator {
                 return value + line;
             }
         };
-        return lineReadTemplate(filepath, concatenateCallback,"");
+        return lineReadTemplate(filepath, concatenateCallback, "");
     }
 }

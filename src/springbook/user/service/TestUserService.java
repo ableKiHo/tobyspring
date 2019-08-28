@@ -11,7 +11,7 @@ public class TestUserService extends UserServiceImpl {
     }
 
     protected void upgradeLevel(User user) {
-        if(user.getId().equals(this.id)) {
+        if (user.getId().equals(this.id)) {
             throw new TestUserServiceException();
         }
         super.upgradeLevel(user);

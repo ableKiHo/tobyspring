@@ -9,7 +9,8 @@ public class User {
     private int recommend;
     private String email;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String id, String name, String password, Level level, int login, int recommend, String email) {
         this.id = id;
@@ -23,10 +24,9 @@ public class User {
 
     public void upgradeLevel() {
         Level nextLevel = this.level.nextLevel();
-        if(nextLevel == null) {
+        if (nextLevel == null) {
             throw new IllegalStateException(this.level + "은 업그레이드가 불가능합니다.");
-        }
-        else {
+        } else {
             this.level = nextLevel;
         }
     }

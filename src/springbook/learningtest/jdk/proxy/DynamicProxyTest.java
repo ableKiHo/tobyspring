@@ -2,6 +2,9 @@ package springbook.learningtest.jdk.proxy;
 
 import org.junit.Test;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -18,15 +21,40 @@ public class DynamicProxyTest {
         assertThat(proxiedHello.sayHello("Kiho"), is("HELLO KIHO"));
         assertThat(proxiedHello.sayHi("Kiho"), is("HI KIHO"));
         assertThat(proxiedHello.sayThankyou("Kiho"), is("THANK YOU KIHO"));
+
+        Hello proxiedHello2 = (Hello) Proxy.newProxyInstance(
+                getClass().getClassLoader(),
+                new Class[] {Hello.class},
+                (java.lang.reflect.InvocationHandler) new UppercaseHandler(new HelloTarget()));
     }
 
-    static interface Hello {
+    interface InvocationHandler {
+        Object invoke(Object proxy, Method method, Object[] args) throws Throwable;
+    }
+
+    class UppercaseHandler implements InvocationHandler {
+        Hello hello;
+
+        public UppercaseHandler(Hello hello) {
+            this.hello = hello;
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable{
+            String ret = (String)method.invoke(hello, args);
+            return ret.toUpperCase();
+        }
+    }
+
+    interface Hello {
         String sayHello(String name);
+
         String sayHi(String name);
+
         String sayThankyou(String name);
     }
 
-    static class HelloTarget implements Hello {
+    class HelloTarget implements Hello {
 
         @Override
         public String sayHello(String name) {
@@ -44,7 +72,7 @@ public class DynamicProxyTest {
         }
     }
 
-    static class HelloUppercase implements Hello {
+    class HelloUppercase implements Hello {
 
         Hello hello;
 
