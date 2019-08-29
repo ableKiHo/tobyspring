@@ -13,6 +13,8 @@
     <bean id="userService" class="springbook.user.service.UserServiceTx">
         <property name="transactionManager" ref="transactionManager"/>
         <property name="userService" ref="userServiceImpl"/>
+        <property name="pattern" value="upgradeLevels" />
+        <property name="serviceInterface" value="springbook.user.service.UserService" />
     </bean>
     <bean id="userServiceImpl" class="springbook.user.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
