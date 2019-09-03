@@ -35,4 +35,8 @@
 
     <bean id="mailSender" class="springbook.user.service.DummyMailSender"/>
 
+    <bean id="transactionAdvice" class="springbook.user.service.TransactionAdvice">
+        <property name="transactionManager" ref="transactionManager" />
+    </bean>
+
 </beans>
