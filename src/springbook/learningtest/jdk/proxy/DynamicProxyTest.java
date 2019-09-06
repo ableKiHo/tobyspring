@@ -6,12 +6,9 @@ import org.junit.Test;
 import org.springframework.aop.ClassFilter;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactoryBean;
-import org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.xml.soap.SAAJResult;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
