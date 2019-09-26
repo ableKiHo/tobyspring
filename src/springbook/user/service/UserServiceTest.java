@@ -142,7 +142,7 @@ public class UserServiceTest {
         try {
             this.testUserService.upgradeLevels();
             fail("TestUserServiceException expected");
-        } catch (TestUserService.TestUserServiceException e) {
+        } catch (TestUserServiceException e) {
 
         }
 
@@ -230,7 +230,7 @@ public class UserServiceTest {
 
         protected void upgradeLevel(User user) {
             if (user.getId().equals(this.id)) {
-                throw new TestUserService.TestUserServiceException();
+                throw new TestUserServiceException();
             }
             super.upgradeLevel(user);
         }
@@ -243,4 +243,5 @@ public class UserServiceTest {
         }
 
     }
+    static class TestUserServiceException extends RuntimeException {}
 }
