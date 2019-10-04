@@ -43,8 +43,14 @@
         <property name="sqlService" ref="sqlService" />
     </bean>
 
-    <bean id="sqlService" class="springbook.user.sqlservice.XmlSqlService">
-        <property name="sqlmapFile" value="sqlmap.xml"/>
+    <bean id="sqlService" class="springbook.user.sqlservice.DefaultSqlService">
+    </bean>
+
+    <bean id="sqlReader" class="springbook.user.sqlservice.JaxbXmlSqlReader" >
+        <property name="sqlmapFile" value="sqlmap.xml" />
+    </bean>
+
+    <bean id="sqlRegistry" class="springbook.user.sqlservice.HashMapSqlRegistry" >
     </bean>
 
     <bean id="userService" class="springbook.user.service.UserServiceImpl">
