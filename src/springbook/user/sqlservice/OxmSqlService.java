@@ -17,6 +17,10 @@ public class OxmSqlService implements SqlService {
 
     private SqlRegistry sqlRegistry = new HashMapSqlRegistry();
 
+    public void setSqlRegistry(SqlRegistry sqlRegistry) {
+        this.sqlRegistry = sqlRegistry;
+    }
+
     public void setUnmarshaller(Unmarshaller unmarshaller) {
         this.oxmSqlReader.setUnmarshaller(unmarshaller);
     }
