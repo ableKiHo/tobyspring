@@ -16,8 +16,6 @@
                         http://www.springframework.org/schema/jdbc
                         http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
-    <context:annotation-config />
-
     <aop:config>
         <aop:advisor advice-ref="transactionAdvice" pointcut="bean(*Service)" />
     </aop:config>
