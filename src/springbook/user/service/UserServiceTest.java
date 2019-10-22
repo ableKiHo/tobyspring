@@ -225,7 +225,7 @@ public class UserServiceTest {
         }
     }
 
-    static class TestUserServiceImpl extends UserServiceImpl {
+    public static class TestUserService extends UserServiceImpl {
 
         private String id = "umkiho4";
 
